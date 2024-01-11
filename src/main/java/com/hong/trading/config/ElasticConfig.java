@@ -11,6 +11,16 @@ public class ElasticseachClient {
     private int port;
     protected RestHighLevelClient client;
 
+    public ElasticseachClient() {
+        this.ip = "127.0.0.1";
+        this.port = 9200;
+        this.client = new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost(ip, port, "http")
+                )
+        );
+    }
+
     public ElasticseachClient(String ip, int port, RestHighLevelClient client) {
         this.ip = ip;
         this.port = port;
