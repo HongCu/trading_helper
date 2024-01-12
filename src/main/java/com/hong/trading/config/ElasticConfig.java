@@ -1,47 +1,18 @@
-package com.hong.trading.client;
+package com.hong.trading.config;
 
-import org.apache.http.HttpHost;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
+import lombok.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.elasticsearch.client.ClientConfiguration;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 
-import java.io.IOException;
+@Configuration
+public class ElasticConfig extends ElasticsearchConfiguration {
+    private String elasticUrl = "localhost:9200";
 
-public class ElasticseachClient {
-    private String ip;
-    private int port;
-    protected RestHighLevelClient client;
-
-    public ElasticseachClient() {
-        this.ip = "127.0.0.1";
-        this.port = 9200;
-        this.client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost(ip, port, "http")
-                )
-        );
-    }
-
-    public ElasticseachClient(String ip, int port, RestHighLevelClient client) {
-        this.ip = ip;
-        this.port = port;
-        this.client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost(ip, port, "http")
-                )
-        );
-    }
-
-    public ElasticseachClient(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
-        this.client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost(ip, port, "http")
-                )
-        );
-    }
-
-    public void close() throws IOException {
-        this.client.close();
+    @Override
+    public ClientConfiguration clientConfiguration() {
+        return ClientConfiguration.builder()
+                .connectedTo(elasticUrl)
+                .build();
     }
 }

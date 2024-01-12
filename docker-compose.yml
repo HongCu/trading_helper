@@ -20,6 +20,7 @@ services:
       - node.name=node-1
       - cluster.name=stock
       - network.host=0.0.0.0
+      - xpack.security.enabled=false
     container_name: stock_es
     depends_on:
       - mysql
